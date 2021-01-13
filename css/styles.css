@@ -1,0 +1,39 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.header {
+  text-align: center;
+}
+.form-input {
+  display: block;
+  width: 100%;
+}
+.main {
+  margin-top: 3rem;
+}
+.card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 10px;
+  transition: 400ms;
+}
+.card:hover {
+  box-shadow: 0 5px 5px 0 #eee;
+}
+.card-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.card-title a {
+  color: blue
+}
+.card-link {
+  font-size: .9rem;
+  color:green;
+  text-decoration: none;
+} 
+.card-description {
+  margin-top: .2rem;
+  color: #555;
+  font-size: .9rem;
+}
