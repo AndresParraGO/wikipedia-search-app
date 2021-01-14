@@ -69,3 +69,15 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+
+/* Navigation */
+.navigation {
+  display: none;
+  margin-bottom: 3rem;
+  /* display: flex; */
+  justify-content: flex-end;
+}
+.navigation button {
+  margin: 0  .3rem;
+}

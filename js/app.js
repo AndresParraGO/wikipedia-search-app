@@ -1,5 +1,17 @@
 const main = document.getElementById('main'),
-  form = document.getElementById('form');
+  form = document.getElementById('form'),
+  navigation = document.getElementById('navigation'),
+  btnNavigationNext = document.getElementById('navigation-next');
+
+let offset = 0,
+  word = '';
+
+const showNavigation = () => {
+  navigation.style.display = 'flex';
+}
+const hideNavigation = () => {
+  navigation.style.display = 'none';
+}
 
 const renderLoading = () => {
   const loadingEl = document.createElement('div');
@@ -33,10 +45,17 @@ const renderResults = results => {
 }
 
 const searchInWikipedia = async (word) => {
-  const res = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=10&srsearch=${word}`);
-  const data = await res.json();
-  const results = data.query.search;
-  return results;
+  try {
+    const res = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=10&srsearch=${word}&sroffset=${offset}`);
+    const data = await res.json();
+    const results = data.query.search;
+    offset = data.continue.sroffset || 0;
+    showNavigation();
+    return results;
+  } catch (err) {
+    hideNavigation();
+    return [];
+  }
 }
 
 const handleFormSearch = async e => {
@@ -44,9 +63,15 @@ const handleFormSearch = async e => {
   renderLoading();
   
   e.preventDefault();
-  let word = e.target.children[0].value;
+  word = e.target.children[0].value;
   let results = await searchInWikipedia(word);
   renderResults(results);
 }
 
+const handleNavigationNext = async () => {
+  let results = await searchInWikipedia(word, offset);
+  renderResults(results);
+}
+
 form.addEventListener('submit', handleFormSearch);
+btnNavigationNext.addEventListener('click', handleNavigationNext);
